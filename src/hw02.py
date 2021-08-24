@@ -1,21 +1,24 @@
 # Sameer Rao
-import copy
 def scale(S, M):
-    M = copy.deepcopy(M)
+    A = []
     for j in range(len(M)):
+        temp = []
         for k in range(len(M[0])):
-            M[j][k] *= S
-    return M
+            temp.append(M[j][k]*S)
+        A.append(temp)
+    return A
 
 def add(M1, M2):
-    S = copy.deepcopy(M1)
     size1 = (len(M1), len(M1[0]))
     size2 = (len(M2), len(M2[0]))
     if size1 != size2:
         return "wrong size"
+    S = []
     for j in range(len(M1)):
+        temp = []
         for k in range(len(M1[0])):
-            S[j][k] = M1[j][k] + M2[j][k]
+            temp.append(M1[j][k] + M2[j][k])
+        S.append(temp)
     return S
 
 def transpose(M):
@@ -57,6 +60,7 @@ M3 = [
     [9,10,11,12]
     ]
 
-#print(add(M1, M2))
-#print(transpose(M3))
+print(scale(2, M1))
+print(add(M1, M2))
+print(transpose(M3))
 print(multiply(M1, M3))

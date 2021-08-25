@@ -1,4 +1,6 @@
 # Sameer Rao
+
+#scales a matrix M by a factor S
 def scale(S, M):
     A = []
     for j in range(len(M)):
@@ -8,6 +10,7 @@ def scale(S, M):
         A.append(temp)
     return A
 
+#adds matrix M1 and M2
 def add(M1, M2):
     size1 = (len(M1), len(M1[0]))
     size2 = (len(M2), len(M2[0]))
@@ -21,6 +24,7 @@ def add(M1, M2):
         S.append(temp)
     return S
 
+#transposes a matrix M
 def transpose(M):
     T = []
     for j in range(len(M[0])):
@@ -30,12 +34,15 @@ def transpose(M):
         T.append(temp)
     return T
 
+#computes the dot product of 2 vectors
 def dotProduct(V1, V2):
     S = 0
     for i in range(len(V1)):
         S += V1[i]*V2[i]
     return S
 
+#multiplies two matrices by first transposing the second matrix and
+#dotting each corresponding row
 def multiply(M1, M2):
     if len(M1[0])!= len(M2):
         return "wrong size"

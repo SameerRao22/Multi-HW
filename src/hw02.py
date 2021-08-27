@@ -1,5 +1,5 @@
 # Sameer Rao
-
+import copy
 #scales a matrix M by a factor S
 def scale(S, M):
     A = []
@@ -55,19 +55,39 @@ def multiply(M1, M2):
         P.append(r)
     return P
 
+def det(M):
+    size = (len(M), len(M[0]))
+    if size[0] != size[1]:
+        return "Not a Square"
+
+    if size[0] == 2:
+        return (M[0][0]*M[1][1]) - M[0][1]*M[1][0]
+    
+    D = 0
+    for i in range(size[0]):
+        M2 = copy.deepcopy(M)
+        v = M2[0][i]
+        M2.pop(0)
+        M2 = transpose(M2)
+        M2.pop(i)
+        M2 = transpose(M2)
+        D += v * det(M2) * (-1)**i
+    return D
+
 M1 = [
-    [1,2,3],
-    [4,5,6],
-    [7,8,9]
+    [1,2,7,4],
+    [5,7,7,8],
+    [9,10,17,12],
+    [13,14,15,17]
     ]
 M2 = scale(2, M1)
 M3 = [
-    [1,2,3,4],
-    [5,6,7,8],
-    [9,10,11,12]
+    [5,6],
+    [8,9],
     ]
 
-print(scale(2, M1))
-print(add(M1, M2))
-print(transpose(M3))
-print(multiply(M1, M3))
+#print(scale(2, M1))
+#print(add(M1, M2))
+#print(transpose(M3))
+#print(multiply(M1, M3))
+print(det(M1))

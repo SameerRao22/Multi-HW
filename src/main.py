@@ -1,4 +1,4 @@
-import hw02
+import matrix
 
 V = [
         [0,1,.5,0],
@@ -7,8 +7,8 @@ V = [
     ]
 
 M = [
-  [1,  0,  2],
+  [-1,  0,  2],
   [0,  1,  0],
   [0,  0,  1]
 ]
-hw02.transform(M,V)
+matrix.transform(M,V)

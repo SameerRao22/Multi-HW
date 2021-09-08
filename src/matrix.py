@@ -77,6 +77,13 @@ def det(M):
         D += v * det(M2) * (-1)**i
     return D
 
+def mPrint(M):
+    for i in M:
+        s = ""
+        for j in i:
+            s += str(j).ljust(10) 
+        print(s)
+
 #transforms a vector V using a matrix M
 def transform(M, V):
   plt.style.use('dark_background')
@@ -84,3 +91,37 @@ def transform(M, V):
   V2 = multiply(M,V)
   plt.plot(V2[0],V2[1],'cyan')
   plt.show()
+
+def rowSwap(M, r1, r2):
+    v = M[r1]
+    M[r1] = M[r2]
+    M[r2] = v
+
+def rowScale(M, r1, s):
+    for i in range(len(M[0])):
+        M[r1][i] *= s
+
+def rowSum(M, r1, r2, s):
+    for i in range(len(M[0])):
+        M[r2][i] += s*M[r1][i]
+
+def rref(M):
+    M = copy.deepcopy(M)
+    i = 1
+
+    while (M[0][0] == 0):
+       rowSwap(M, 0, i)
+       i+=1
+    rowScale(M, 0, 1./M[0][0])
+     
+    for r in range(len(M)):
+        for i in range(len(M)):
+            if (i == r):
+                continue
+            if (M[r][r] != 0):
+                rowSum(M, r, i, (M[i][r]*-1)/(M[r][r]))
+    
+    for i in range(len(M)):
+        if M[i][i] != 0:
+            rowScale(M, i, 1/M[i][i])
+    return M

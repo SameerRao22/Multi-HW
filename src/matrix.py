@@ -81,6 +81,7 @@ def mPrint(M):
     for i in M:
         s = ""
         for j in i:
+            j = "{:.3f}".format(j)
             s += str(j).ljust(10) 
         print(s)
 
@@ -108,10 +109,23 @@ def rowSum(M, r1, r2, s):
 def rref(M):
     M = copy.deepcopy(M)
     i = 1
+    
+    last = len(M)
+    for i in range(last):
+        flag = True
+        for j in range(len(M[0])):
+            if M[i][j] != 0:
+                flag = False
+                break
+        if flag:
+            rowSwap(M, i, 2)
+            last -= 1
 
+    
     while (M[0][0] == 0):
        rowSwap(M, 0, i)
        i+=1
+   
     rowScale(M, 0, 1./M[0][0])
      
     for r in range(len(M)):

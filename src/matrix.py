@@ -108,7 +108,6 @@ def rowSum(M, r1, r2, s):
 
 def rref(M):
     M = copy.deepcopy(M)
-    i = 1
     
     last = len(M)
     for i in range(last):
@@ -122,6 +121,7 @@ def rref(M):
             last -= 1
 
     
+    i = 1
     while (M[0][0] == 0):
        rowSwap(M, 0, i)
        i+=1

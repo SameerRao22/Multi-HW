@@ -107,19 +107,26 @@ def rowSum(M, r1, r2, s):
         M[r2][i] += s*M[r1][i]
 
 def rref(M):
+    rowLong = False
+
     M = copy.deepcopy(M)
     
     last = len(M)
+    allZero = True
+    used = []
     for i in range(last):
         flag = True
         for j in range(len(M[0])):
             if M[i][j] != 0:
                 flag = False
+                allZero = False
                 break
-        if flag:
-            rowSwap(M, i, 2)
+        if flag and i not in used:
+            rowSwap(M, i, last-1)
+            used.append(last-1)
             last -= 1
-
+    if allZero:
+        return M
     
     i = 1
     while (M[0][0] == 0):
@@ -127,15 +134,32 @@ def rref(M):
        i+=1
    
     rowScale(M, 0, 1./M[0][0])
-     
+
+    if len(M) > len(M[0]):
+        return rref2(M)
+
     for r in range(len(M)):
         for i in range(len(M)):
             if (i == r):
                 continue
             if (M[r][r] != 0):
                 rowSum(M, r, i, (M[i][r]*-1)/(M[r][r]))
-    
+   
     for i in range(len(M)):
         if M[i][i] != 0:
             rowScale(M, i, 1/M[i][i])
+
     return M
+
+def rref2(M):
+    for r in range(len(M[0])):
+        for i in range(len(M[0])):
+            if (i == r):
+                continue
+            if (M[r][r] != 0):
+                rowSum(M, r, i, (M[i][r]*-1)/(M[r][r]))
+    for i in range(len(M[0])):
+        if M[i][i] != 0:
+            rowScale(M, i, 1/M[i][i])
+    return M
+

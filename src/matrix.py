@@ -151,3 +151,19 @@ def rref(M):
             rowScale(M, i, 1/M[i][i])
 
     return M
+
+def inverse(M):
+  M2 = copy.deepcopy(M)
+  I = identity(len(M2))
+  for j in range(len(M2)):
+    for k in range(len(M2)):
+      M2[j].append(I[j][k])
+  M2 = rref(M2)
+  
+  N = []
+  for j in range(len(M)):
+    R = []
+    for k in range(len(M)):
+      R.append(M2[j][k+len(M)])
+    N.append(R)
+  return N

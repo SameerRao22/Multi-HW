@@ -182,3 +182,9 @@ def inverse(M):
       R.append(M2[j][k+len(M)])
     N.append(R)
   return N
+
+def solve(M, b):
+    M = copy.deepcopy(M)
+    M = inverse(M)
+    x = multiply(M, b)
+    return x

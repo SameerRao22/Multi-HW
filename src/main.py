@@ -29,6 +29,8 @@ M3 = [
     [-3, 0, 10, 5]
     ]
 
-M2 = m.rref(M3)
+B = [[1],[2],[3]]
+
+M2 = m.solve(M, B)
 #rowSwap(M2, 1, 3)
 m.mPrint(M2)

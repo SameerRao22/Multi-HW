@@ -108,26 +108,27 @@ def rowSum(M, r1, r2, s):
     for i in range(len(M[0])):
         M[r2][i] += s*M[r1][i]
 
-def rref(M):
-    M = copy.deepcopy(M)
-    
-    last = len(M)
-    allZero = True
-    used = []
-    for i in range(last):
+def zeros(M):
+    z = []
+    for i in range(len(M)):
         flag = True
         for j in range(len(M[0])):
             if M[i][j] != 0:
                 flag = False
-                allZero = False
-                break
-        if flag and i not in used:
-            rowSwap(M, i, last-1)
-            used.append(last-1)
-            last -= 1
+        if flag:
+            z.append(i)
+    return z
+
+def rref(M):
+    M = copy.deepcopy(M)
+    allZero = True
+    for i in range(len(M)):
+        for j in range(len(M[0])):
+                if M[i][j] != 0:
+                    allZero = False
+                    break
     if allZero:
         return M
-    
     i = 1
     while (M[0][0] == 0):
        rowSwap(M, 0, i)
@@ -146,10 +147,12 @@ def rref(M):
             if (M[r][r] != 0):
                 rowSum(M, r, i, (M[i][r]*-1)/(M[r][r]))
    
-    for i in range(v):
-        if M[i][i] != 0:
-            rowScale(M, i, 1/M[i][i])
-
+    z = zeros(M)
+    z.sort(reverse=True)
+    print(z)
+    last = -1
+    for i in range(len(z)):
+        rowSwap(M, z[i], last)
     return M
 
 def inverse(M):

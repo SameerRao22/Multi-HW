@@ -1,4 +1,5 @@
-from matrix import *
+import matrix as m
+import calc3codes as c
 
 V = [
         [0,1,.5,0],
@@ -28,6 +29,6 @@ M3 = [
     [-3, 0, 10, 5]
     ]
 
-M2 = rref(M)
+M2 = m.rref(M3)
 #rowSwap(M2, 1, 3)
-mPrint(M2)
+m.mPrint(M2)

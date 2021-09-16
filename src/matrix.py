@@ -149,11 +149,23 @@ def rref(M):
    
     z = zeros(M)
     z.sort(reverse=True)
-    print(z)
-    last = -1
+    last = len(M)
     for i in range(len(z)):
+        last -= 1
         rowSwap(M, z[i], last)
     return M
+
+def identity(n):
+    I = []
+    for j in range(n):
+      R = []
+      for k in range(n):
+        if j == k:
+          R.append(1)  
+        else:
+          R.append(0)
+      I.append(R)
+    return I
 
 def inverse(M):
   M2 = copy.deepcopy(M)

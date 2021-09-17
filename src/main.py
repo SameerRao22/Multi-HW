@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import matrix as m
 import calc3codes as c
 
@@ -31,6 +32,6 @@ M3 = [
 
 B = [[1],[2],[3]]
 
-M2 = m.solve(M, B)
+M2 = m.inverse(M)
 #rowSwap(M2, 1, 3)
 m.mPrint(M2)

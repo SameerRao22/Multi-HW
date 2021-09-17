@@ -1,4 +1,5 @@
 # Sameer Rao
+# -*- coding: utf-8 -*-
 import copy
 import matplotlib.pyplot as plt
 
@@ -78,13 +79,27 @@ def det(M):
     return D
 
 def mPrint(M):
-    for i in M:
-        s = ""
-        for j in i:
-            if j == 0:
-                j = abs(j)
-            j = "{:.3f}".format(j)
-            s += str(j).ljust(10) 
+    for i in range(len(M)):
+        if i == 0:
+            s = "⎡"
+        elif i == len(M)-1:
+            s = "⎣"
+        else:
+            s = "⎜"
+        for j in range(len(M[i])):
+            if M[i][j] == 0:
+                M[i][j] = abs(M[i][j])
+            M[i][j] = "{:.3f}".format(M[i][j])
+            if (j != len(M[i]) - 1): 
+                s += str(M[i][j]).ljust(10) 
+            else:
+                s += str(M[i][j])
+        if i == 0:
+            s += "⎤"
+        elif i == len(M)-1:
+            s += "⎦"
+        else:
+            s += "⎟"
         print(s)
 
 #transforms a vector V using a matrix M

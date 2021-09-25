@@ -3,3 +3,6 @@ src/__pycache__
 src/matrix.pyc
 src/calc3codes.py
 
+.DS_Store
+src/Markov_Project/corpus.txt
+src/calc3codes.pyc

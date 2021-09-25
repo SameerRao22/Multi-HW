@@ -3,6 +3,7 @@
 import copy
 import matplotlib.pyplot as plt
 import math
+import os
 
 #scales a matrix M by a factor S
 def scale(S, M):
@@ -80,6 +81,7 @@ def det(M):
     return D
 
 def mPrint(M):
+    M = copy.deepcopy(M)
     for j in M:
         s = ""
         for k in j:
@@ -94,6 +96,7 @@ Colors diagonals
 Formats values
 '''
 def pPrint(M):
+    M = copy.deepcopy(M)
     CRED = '\033[91m' #Header for red text
     CEND = '\033[0m'  #Footer for text
 
@@ -164,6 +167,7 @@ def pPrint(M):
             s += "|"
 
         print(s)
+    print()
 
 #transforms a vector V using a matrix M and graphs it
 def transform(M, V):
@@ -202,8 +206,11 @@ def zeros(M):
     return z
 
 #reduces a matrix to reduced row echelon form
-def rref(M):
+def rref(M, work=False):
     M = copy.deepcopy(M)
+    if work:
+        print('Original:')
+        pPrint(M)
 
     allZero = True  #checks if a matrix is all zero
     for i in range(len(M)):
@@ -240,7 +247,9 @@ def rref(M):
                 continue
             if (M[r][r] != 0):
                 rowSum(M, r, i, (M[i][r]*-1)/(M[r][r]))
-   
+            if work:
+                print(f'Step {r+1}:')
+                pPrint(M)
 
     for r in range(v):
         for i in range(v):

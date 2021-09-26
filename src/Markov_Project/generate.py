@@ -1,33 +1,27 @@
 from matrix import *
 from markov import *
-import sys
 
-def main(file, model_name, k):
+def main(file, length=None, origin=None):
     file = file
-    model_name = model_name
-
-    # print('Enter the starting word')
-    # origin = input()
-    # print('Enter the size of the sentence')
-    # size = int(input())
-    print('Reading corpus...')
+    print('Reading Corpus...')
     words = tokenize(file)
-    print('Corpus read')
-    print('')
-    ind = gen_index(words)
+    ind, model = gen_model(words)
+    print('[Completed]')
+    print('\nCreating Model...')
+    model = normalize(model)
+    print('[Completed]\n')
 
-    k = k
-    origin = 'and'
+    if origin == None:
+        origin = random.choice(words)
+    
+    vector = word_to_vector(origin, ind)
 
-    origin = origin.split(' ')
+    print('Generating Sentence...')
+    s = generate(model, vector, ind, length)
+    print('[Completed]\n')
+    s = origin + ' ' + s
+    print(s.capitalize())
 
-    dm = dict_model(words, k=k)
-    model = transition_model(dm, ind)
-    model = normalize(model, ind)
-    print('Model created')
-    print('')
-
-    save(model, ind, model_name)
 
 if __name__ == '__main__':
-    main(file='data/corpus3.txt', model_name='models/model1.txt', k=3)
+    main(file='data/corpus3.txt')

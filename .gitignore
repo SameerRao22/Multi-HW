@@ -16,3 +16,4 @@ src/Markov_Project/data/corpus3.txt
 src/Markov_Project/data/corpus1.txt
 src/Markov_Project/data/corpus2.txt
 src/Markov_Project/__pycache__/markov.cpython-39.pyc
+src/Markov_Project/.vscode/launch.json

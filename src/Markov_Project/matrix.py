@@ -24,3 +24,21 @@ def multiply(M1, M2):
             r.append(dotProduct(j,k))
         P.append(r)
     return P
+
+def zero(matrixSize,columns='square'):
+    '''Returns a new zero matrix of the given size.'''
+    if type(matrixSize)==list: #These if/elif/else statements account for three different types of inputs.
+        R=matrixSize[0]
+        C=matrixSize[1]
+    elif columns=='square':
+        R=matrixSize
+        C=matrixSize
+    else:
+        R=matrixSize
+        C=columns
+    for c in range(C):
+        row=[0]*C
+    Z=[]
+    for r in range(R):
+       Z.append(row.copy())
+    return(Z)       

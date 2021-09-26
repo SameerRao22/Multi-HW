@@ -6,3 +6,13 @@ src/calc3codes.py
 .DS_Store
 src/Markov_Project/corpus.txt
 src/calc3codes.pyc
+src/Markov_Project/__pycache__/matrix.cpython-39.pyc
+src/Markov_Project/models/model1.txt
+.gitignore
+src/Markov_Project/__pycache__/generate.cpython-39.pyc
+.gitignore
+src/Markov_Project/data/corpus3.txt
+.gitignore
+src/Markov_Project/data/corpus1.txt
+src/Markov_Project/data/corpus2.txt
+src/Markov_Project/__pycache__/markov.cpython-39.pyc

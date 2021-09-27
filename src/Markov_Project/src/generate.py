@@ -20,7 +20,7 @@ def main(file, length=None, origin=None):
     s = generate(model, vector, ind, length)
     print('[Completed]\n')
     s = origin + ' ' + s
-    print('\n------Benchmark------')
+    print('\n------Sentence------')
     print(s.capitalize())
 
 

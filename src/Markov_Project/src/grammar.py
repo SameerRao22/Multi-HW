@@ -1,3 +1,4 @@
+from nltk import classify
 from nltk.util import pr
 from markov import *
 import string
@@ -31,6 +32,16 @@ def seed(raw_words, next = ['NOUN', 'DET']):
         origin = random.choice(raw_words)
     origin = origin[0]
     return origin
+
+def sentence_write(sentence, clear=False):
+    if clear:
+        f = open('sentence.txt', 'w')
+    else:
+        f = open('sentence.txt', 'a')
+    for i in sentence:
+        f.write(i + ' ')
+    f.write('\n')
+    f.close()
 
 def next(pos, pos_chain):
     if pos == 'NOUN' or pos == 'PRON':
@@ -68,6 +79,7 @@ def valid(pos_chain):
     return ('NOUN' in pos_chain or 'PRON' in pos_chain) and ('VERB' in pos_chain)
 
 def g_generate(model, vector, index, pos, words):
+    sentence_write([], clear=True)
     sentence = []
     pos_chain = []
     v = vector
@@ -115,6 +127,7 @@ def g_generate(model, vector, index, pos, words):
                 count += 1
 
         sentence.append(word)
+        sentence_write(sentence)
     return sentence
 
 def main(file):

@@ -7,7 +7,6 @@ def main(file, length=None, origin=None):
     print('Reading Corpus...')  #Read corpus and generate model
     raw_words = tokenize(file)
     words = list(map(lambda word : word[0], raw_words))
-    # pos = list(map(lambda word: word[1], raw_words))
     ind, model = gen_model(words)
     print('[Completed]')
 

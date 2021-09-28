@@ -73,14 +73,12 @@ def g_generate(model, vector, index, pos, words):
     v = vector
     sentence.append(vector_to_word(v, index))
     while True:
-        # v_initial = v
         word_initial = vector_to_word(v, index)
         pos_initial = pos[words.index(word_initial)][1]
         pos_chain.append(pos_initial)
         pos_next = next(pos_initial, pos_chain)
         if len(sentence) >= 10 and pos_chain[len(sentence)-1] == 'NOUN':
             break
-        # print(pos_next)
 
         if 'END' in pos_next:
             break
@@ -117,15 +115,11 @@ def g_generate(model, vector, index, pos, words):
                 count += 1
 
         sentence.append(word)
-        # print(sentence)
-        # if word in '.!?' and valid(pos_chain):
-        #     break
     return sentence
 
 def main(file):
     raw_words = tokenize(file)
     words = list(map(lambda word : word[0], raw_words))
-    # pos = list(map(lambda word: word[1], raw_words))
     ind, model = gen_model(words)
     print('[Completed]')
 

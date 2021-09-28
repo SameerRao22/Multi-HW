@@ -41,4 +41,7 @@ def zero(matrixSize,columns='square'):
     Z=[]
     for r in range(R):
        Z.append(row.copy())
-    return(Z)       
+    return(Z)
+
+def size(matrix):
+    return([len(matrix),len(matrix[0])])

@@ -1,21 +1,15 @@
 import string
 import random
 import matrix
+import nltk
 
 
 def tokenize(corpus):
     f = open(corpus, 'r')
-    words = f.read()
+    words = f.read().lower()
     f.close()
-    words = words.replace('\n', ' ')
-    words = words.replace('!', '.')
-    words = words.replace('?', '.')
-    words = words.replace('.', ' .')
-    r = string.punctuation
-    r = r.replace('.', '')
-    words = words.translate(str.maketrans('','',r))
-    words = words.lower()
-    words = words.split(' ')
+    words = nltk.word_tokenize(words)
+    words = nltk.pos_tag(words, tagset='universal')
     return words
 
 def gen_model(words):
@@ -62,26 +56,24 @@ def vector_to_word(v, index):
     return w[0]
 
 def generate(model, vector, index, k=None):
-    sentence = ''
+    sentence = vector_to_word(vector, index) + ' '
     v = vector
     if k != None:
         for i in range(k):
             v = matrix.multiply(model, v)
             word = vector_to_word(v, index)
             v = word_to_vector(word, index)
-            if word == '.':
-                sentence = sentence[:len(sentence)-1] + word
-                break 
-            else:
-                sentence += word + ' '
+            if word in string.punctuation:
+                sentence = sentence[:len(sentence)-1]
+            sentence += word + ' '
     else:
         while True:
             v = matrix.multiply(model, v)
             word = vector_to_word(v, index)
             v = word_to_vector(word, index)
-            if word == '.':
-                sentence = sentence[:len(sentence)-1] + word
-                break 
-            else:
-                sentence += word + ' '
+            if word in string.punctuation:
+                sentence = sentence[:len(sentence)-1]
+            sentence += word + ' '
+            if word in '.!?':
+                break
     return sentence

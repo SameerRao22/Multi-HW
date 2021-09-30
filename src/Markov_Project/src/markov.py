@@ -1,3 +1,4 @@
+from os import replace
 import string
 import random
 import matrix
@@ -6,7 +7,9 @@ import nltk
 
 def tokenize(corpus):
     f = open(corpus, 'r')
-    words = f.read().lower()
+    words = f.read().lower().replace(' i ',' I ')
+    for i in string.punctuation:
+        words = words.replace(i, '')
     f.close()
     words = nltk.word_tokenize(words)
     words = nltk.pos_tag(words, tagset='universal')

@@ -44,39 +44,53 @@ def sentence_write(sentence, clear=False):
     f.close()
 
 def next(pos, pos_chain):
+    ret = []
     if pos == 'NOUN' or pos == 'PRON':
-        if len(pos_chain) >= 4:
-            if pos_chain[len(pos_chain)-2] == 'VERB':
-                return ['END']
-            elif pos_chain[len(pos_chain)-2] == 'DET':
-                if pos_chain[len(pos_chain)-3] == 'VERB':
-                    return ['END']
-        return ['VERB','CONJ','ADV', 'ADP']
+        ret = ['VERB','CONJ','ADV', 'PRT']
 
     elif pos == 'VERB':
-        return ['NOUN','DET', 'ADV']
+        ret = ['NOUN','DET', 'ADV', 'ADP']
 
     elif pos == 'ADV':
-        if len(pos_chain) >= 10:
-            if pos_chain[len(pos_chain)-2] == 'VERB':
-                return ['END']
-        return ['VERB']
+        if len(pos_chain) == 1:
+            ret = ['NOUN']
+        else:
+            ret = ['VERB', 'ADV']
 
     elif pos == 'ADJ':
-        return ['NOUN']
+        ret = ['NOUN']
 
     elif pos == 'CONJ':
-        return ['NOUN']
+        ret = ['NOUN']
 
     elif pos == 'DET':
-        return ['NOUN']
+        ret = ['NOUN', 'ADJ']
 
-    elif pos == 'ADP':
-        return ['DET', 'NOUN', 'PRON']
-    return []
+    elif pos == 'ADP' or pos == 'PRT':
+        ret = ['DET', 'NOUN', 'PRON']
+    
+    if pos_chain.count('ADP') > 2:
+        try:
+            ret.remove('ADP')
+        except:
+            pass
+    if pos_chain.count('CONJ') > 2:
+        try:
+            ret.remove('CONJ')
+        except:
+            pass
+    if pos_chain.count('PRT') > 2:
+        try:
+            ret.remove('PRT')
+        except:
+            pass
+    return ret
 
 def valid(pos_chain):
-    return ('NOUN' in pos_chain or 'PRON' in pos_chain) and ('VERB' in pos_chain)
+    pronouns = pos_chain.count('ADP') + pos_chain.count('PRT')
+    nouns = pos_chain.count('NOUN') + pos_chain.count('PRON')
+    return (nouns >= pronouns) and ('VERB' in pos_chain) and (pos_chain[len(pos_chain)-1] == 'NOUN')
+    
 
 def g_generate(model, vector, index, pos, words):
     sentence_write([], clear=True)
@@ -84,51 +98,49 @@ def g_generate(model, vector, index, pos, words):
     pos_chain = []
     v = vector
     sentence.append(vector_to_word(v, index))
+    for i in sentence:
+        pos_chain.append(pos[words.index(i)][1])
+    sentence_write(sentence)
+    sentence_write(pos_chain)
     while True:
-        word_initial = vector_to_word(v, index)
-        pos_initial = pos[words.index(word_initial)][1]
-        pos_chain.append(pos_initial)
+        pos_initial = pos_chain[len(pos_chain)-1]
         pos_next = next(pos_initial, pos_chain)
-        if len(sentence) >= 10 and pos_chain[len(sentence)-1] == 'NOUN':
-            break
-
-        if 'END' in pos_next:
-            break
 
         if pos_next == []:
-            sentence.pop(len(sentence)-1)
-            v = matrix.multiply(model, v)
-            word = vector_to_word(v, index)
-            v = word_to_vector(word, index)
+            sentence = sentence[:len(sentence)-1]
+            pos_chain = pos_chain[:len(pos_chain)-1]
+            v = word_to_vector(sentence[len(sentence)-1], index)
             continue
 
-        flag = True
         count = 0
-        while flag:
+        while True:
             word_list = []
             v = matrix.multiply(model, v)
             word = vector_to_word(v, index)
             word_list.append(word)
             v = word_to_vector(word, index)
             pos_current = pos[words.index(word)][1]
+
             if (pos_current in pos_next):
-                flag = False
+                sentence.append(word)
+                pos_chain.append(pos[words.index(word)][1])
+                sentence_write(sentence)
+                sentence_write(pos_chain)
+                if len(sentence) >= 5 and valid(pos_chain):
+                    return sentence
+                break
             else:
                 if count >= 5:
                     v = word_to_vector(sentence[len(sentence)-1], index)
                     word = vector_to_word(matrix.multiply(model, v), index)
                     if word in word_list:
-                        new_word = seed(pos)
-                        sentence = []
+                        new_word = seed(pos,next=pos_next)
                         sentence.append(new_word)
-                        pos_chain = []
                         pos_chain.append(pos[words.index(new_word)][1])
+                        v = word_to_vector(sentence[len(sentence)-1], index)
+                        break
                 v = word_to_vector(sentence[len(sentence)-1], index)
                 count += 1
-
-        sentence.append(word)
-        sentence_write(sentence)
-    return sentence
 
 def main(file):
     raw_words = tokenize(file)

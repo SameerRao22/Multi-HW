@@ -24,13 +24,13 @@ def main(file, length=None, origin=None):
 
     vector = word_to_vector(origin, ind)
 
-    print('Generating Sentence Without Grammar...')
-    s = generate(model, vector, ind, length)
-    print('[Completed]\n')
-    print('\n------Sentence------')
-    print(s.capitalize())
+    # print('Generating Sentence Without Grammar...')
+    # s = generate(model, vector, ind, length)
+    # print('[Completed]\n')
+    # print('\n------Sentence------')
+    # print(s.capitalize())
 
-    print('')
+    # print('')
 
     print('Generating Sentence With Grammar...')
     g = g_generate(model, vector, ind, raw_words, words)
@@ -42,7 +42,7 @@ def main(file, length=None, origin=None):
         if i not in string.punctuation:
             s += i + ' '
     s = s[:len(s)-1]+'.'
-    print(s)
+    print(s.lower())
 
 
 if __name__ == '__main__':

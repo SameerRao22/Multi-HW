@@ -12,4 +12,4 @@ def main(file):
     print()
 
 if __name__ == '__main__':
-    main('data/corpus2.txt')
+    main('data/corpus3.txt')

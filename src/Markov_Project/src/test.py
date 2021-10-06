@@ -18,33 +18,34 @@ def main(file, length=None, origin=None):
     print('\nMatrix Size:')
     print(size)
     print('')
-    # print(model)
-
+    for i in model:
+        print(i)
+    print('')
     if origin == None:
         origin = seed(raw_words)
 
     vector = word_to_vector(origin, ind)
 
-    # print('Generating Sentence Without Grammar...')
-    # s = generate(model, vector, ind, k=10)
-    # print('[Completed]\n')
-    # print('\n------Sentence------')
-    # print(s.capitalize())
+    print('Generating Sentence Without Grammar...')
+    s = generate(model, vector, ind, 5)
+    print('[Completed]\n')
+    print('\n------Sentence------')
+    print(s.capitalize())
 
-    # print('')
+    print('')
 
-    print('Generating Sentence With Grammar...')
-    g = g_generate(model, vector, ind, raw_words, words)
-    print('[Completed]')
-    print('\n------Sentence With Grammar------')
+    # print('Generating Sentence With Grammar...')
+    # g = g_generate(model, vector, ind, raw_words, words)
+    # print('[Completed]')
+    # print('\n------Sentence With Grammar------')
 
-    s = ""
-    for i in g:
-        if i not in string.punctuation:
-            s += i + ' '
-    s = s[:len(s)-1]+'.'
-    print(s.lower())
+    # s = ""
+    # for i in g:
+    #     if i not in string.punctuation:
+    #         s += i + ' '
+    # s = s[:len(s)-1]+'.'
+    # print(s.lower())
 
 
 if __name__ == '__main__':
-    main(file='data/corpus3.txt')
+    main(file='data/corpus1.txt')

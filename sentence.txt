@@ -1,0 +1,19 @@
+
+the 
+DET 
+the wildest 
+DET ADJ 
+the wildest excitement 
+DET ADJ NOUN 
+the wildest excitement almost 
+DET ADJ NOUN ADV 
+the wildest excitement almost immediately 
+DET ADJ NOUN ADV ADV 
+the wildest excitement almost immediately afterwards 
+DET ADJ NOUN ADV ADV ADV 
+the wildest excitement almost immediately afterwards communicate 
+DET ADJ NOUN ADV ADV ADV VERB 
+the wildest excitement almost immediately afterwards communicate in the 
+DET ADJ NOUN ADV ADV ADV VERB ADP DET 
+the wildest excitement almost immediately afterwards communicate in the food 
+DET ADJ NOUN ADV ADV ADV VERB ADP DET NOUN 
